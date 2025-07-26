@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja"><head>
+  <meta charset="UTF-8"><title>MiniLineX - フィード</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#007bff">
+</head><body>
+<h1>MiniLineX - フィード</h1>
+<div id="auth">
+  <input type="email" id="email" placeholder="メールアドレス">
+  <input type="password" id="password" placeholder="パスワード">
+  <button onclick="register()">登録</button>
+  <button onclick="login()">ログイン</button>
+</div>
+<div id="main" style="display:none">
+  <button onclick="requestNotification()">通知を許可する</button>
+  <textarea id="postInput" placeholder="何を投稿しますか？"></textarea>
+  <input id="imgUrl" placeholder="画像URL（オプション）">
+  <button onclick="submitPost()">投稿</button>
+  <div id="posts"></div>
+</div>
+<script type="module" src="firebase.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/firebase-messaging-sw.js')
+      .then(()=>console.log('Service Worker 登録完了'))
+      .catch(err=>console.error('SW登録エラー:',err));
+  }
+</script>
+</body></html>
