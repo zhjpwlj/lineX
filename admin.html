@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja"><head>
+  <meta charset="UTF-8"><title>申請管理</title>
+  <link rel="stylesheet" href="style.css">
+</head><body>
+<h1>グループ申請承認</h1>
+<ul id="adminPanel"></ul>
+<script type="module">
+import { app, db, auth } from './firebase.js';
+import { ref, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+onValue(ref(db,"chats"),snap=>{
+  document.getElementById("adminPanel").innerHTML="";
+  const data=snap.val()||{};
+  Object.entries(data).forEach(([gid,g])=>{
+    if(g.owner === auth.currentUser.uid && g.pending){
+      const li=document.createElement("li");
+      li.textContent = `グループ: ${g.name}`;
+      Object.keys(g.pending).forEach(uid=>{
+        const btn=document.createElement("button");
+        btn.textContent = `承認: ${uid}`;
+        btn.onclick=()=>{
+          update(ref(db,`chats/${gid}/members/${uid}`), true);
+          remove(ref(db,`chats/${gid}/pending/${uid}`));
+        };
+        li.appendChild(btn);
+      });
+      document.getElementById("adminPanel").appendChild(li);
+    }
+  });
+});
+</script>
+</body></html>
