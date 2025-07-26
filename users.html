@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja"><head>
+  <meta charset="UTF-8"><title>ユーザー一覧</title>
+  <link rel="stylesheet" href="style.css">
+</head><body>
+<h1>ユーザー一覧</h1>
+<ul id="userList"></ul>
+<script type="module">
+import { app, db, auth } from './firebase.js';
+import { ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+onValue(ref(db,"users"),snap=>{
+  const data=snap.val()||{};
+  const ul=document.getElementById("userList");
+  ul.innerHTML="";
+  Object.values(data).forEach(u=>{
+    const li=document.createElement("li");
+    li.textContent = u.name || u.email || '名無し';
+    ul.appendChild(li);
+  });
+});
+</script>
+</body></html>
