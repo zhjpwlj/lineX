@@ -1,0 +1,72 @@
+/* 基础样式 - Light 模式（默认） */
+body {
+  font-family: sans-serif;
+  padding: 20px;
+  background: #f6f6f6;
+  color: #222;
+}
+input, textarea {
+  width: 100%;
+  margin: 5px 0;
+  padding: 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #222;
+}
+button {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px;
+  margin: 5px 0;
+  cursor: pointer;
+}
+.post {
+  background: #fff;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+}
+img {
+  max-width: 100%;
+  display: block;
+  margin: 5px 0;
+}
+
+/* Dark 模式 */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #121212;
+    color: #ddd;
+  }
+  input, textarea {
+    background: #222;
+    color: #ddd;
+    border-color: #555;
+  }
+  button {
+    background: #3399ff;
+  }
+  .post {
+    background: #222;
+    border-color: #555;
+  }
+}
+
+/* 手动切换 dark class */
+body.dark {
+  background: #121212;
+  color: #ddd;
+}
+body.dark input, body.dark textarea {
+  background: #222;
+  color: #ddd;
+  border-color: #555;
+}
+body.dark button {
+  background: #3399ff;
+}
+body.dark .post {
+  background: #222;
+  border-color: #555;
+}
