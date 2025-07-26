@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja"><head>
+  <meta charset="UTF-8"><title>グループ一覧</title>
+  <link rel="stylesheet" href="style.css">
+</head><body>
+<h1>グループ一覧</h1>
+<ul id="groupList"></ul>
+<script type="module">
+import { app, db, auth } from './firebase.js';
+import { ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+onValue(ref(db,"chats"),snap=>{
+  document.getElementById("groupList").innerHTML="";
+  const data=snap.val()||{};
+  Object.entries(data).forEach(([gid,g])=>{
+    if(g.type==="group"){
+      const li=document.createElement("li");
+      li.textContent = g.name;
+      const btn=document.createElement("button");
+      btn.textContent = "参加申請";
+      btn.onclick = ()=>{
+        update(ref(db,`chats/${gid}/pending/${auth.currentUser.uid}`), true);
+        alert("申請しました！");
+      };
+      li.appendChild(btn);
+      document.getElementById("groupList").appendChild(li);
+    }
+  });
+});
+</script>
+</body></html>
