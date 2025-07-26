@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja"><head>
+  <meta charset="UTF-8"><title>チャット</title>
+  <link rel="stylesheet" href="style.css">
+</head><body>
+<h1>チャットルーム</h1>
+<div id="messages"></div>
+<input id="msg" placeholder="メッセージ入力">
+<button onclick="sendMsg()">送信</button>
+<script type="module">
+import { app, db, auth } from './firebase.js';
+import { ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+const room = location.hash.slice(1);
+onValue(ref(db,`chats/${room}/messages`),snap=>{
+  const box=document.getElementById("messages");
+  box.innerHTML="";
+  Object.values(snap.val()||{}).forEach(m=>{
+    const d=document.createElement("div");
+    d.textContent=`[${m.from}]: ${m.text}`;
+    box.appendChild(d);
+  });
+});
+window.sendMsg=()=>{
+  const t=document.getElementById("msg").value;
+  push(ref(db,`chats/${room}/messages`),{from:auth.currentUser.uid,text:t,time:Date.now()});
+  document.getElementById("msg").value="";
+};
+</script>
+</body></html>
