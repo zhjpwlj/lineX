@@ -12,7 +12,16 @@ import {
   getMessaging, getToken, onMessage
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js';
 
-const config = {/* 在此放你的 firebaseConfig */};
+const config = {
+  ApiKey: "AIzaSyBfjILJpXeAOd6rGagRyZPEhBCznolxMLY",
+  authDomain: "lined-6f718.firebaseapp.com",
+  databaseURL: "https://lined-6f718-default-rtdb.firebaseio.com",
+  projectId: "lined-6f718",
+  storageBucket: "lined-6f718.firebasestorage.app",
+  messagingSenderId: "709484033040",
+  appId: "1:709484033040:web:ede2638fe64270bc884695",
+  measurementId: "G-4SL4SP09D7"
+};
 const app = initializeApp(config);
 export const auth = getAuth(app);
 export const db = getDatabase(app);
